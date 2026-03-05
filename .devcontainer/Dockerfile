@@ -1,4 +1,4 @@
-FROM alpine:3.19
+FROM alpine:3.23
 
 ENV TERRAFORM_VERSION=1.7.4
 ENV PACKER_VERSION=1.10.3
@@ -8,11 +8,15 @@ ENV CONSUL_VERSION=1.17.2
 RUN apk add --no-cache \
     python3 \
     py3-pip \
+    pipx \
     curl \
     unzip \
     bash
 
-RUN pip3 install --no-cache-dir ansible ansible-dev-tools hvac
+RUN pipx install ansible && \
+    pipx inject ansible ansible-lint && \
+    pipx runpip ansible install hvac && \
+    pipx ensurepath
 
 RUN curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip && \
     unzip terraform.zip && \
