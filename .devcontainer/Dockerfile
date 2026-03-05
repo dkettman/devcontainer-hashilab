@@ -14,7 +14,7 @@ RUN apk add --no-cache \
     bash
 
 RUN pipx install --include-deps ansible && \
-    pipx inject ansible ansible-lint && \
+    pipx inject --include-apps ansible ansible-lint && \
     pipx runpip ansible install hvac && \
     pipx ensurepath
 
