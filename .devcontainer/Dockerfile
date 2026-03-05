@@ -16,7 +16,7 @@ RUN apk add --no-cache \
 RUN pipx install --include-deps ansible && \
     pipx inject --include-apps ansible ansible-lint && \
     pipx runpip ansible install hvac && \
-    pipx ensurepath
+    pipx ensurepath --force --all-shells
 
 RUN curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip && \
     unzip terraform.zip && \
